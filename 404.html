@@ -1,7 +1,31 @@
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>Page Not Found - Xamarin Bugzilla Archive</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Page Not Found - Xamarin Bugzilla Archive</title>
+    <script>
+        // redirect to the bug page for show_bug.cgi/show_activity.cgi
+        if (window.location.pathname === '/show_bug.cgi' || window.location.pathname === '/show_activity.cgi') {
+            const querystring_params = new URLSearchParams(location.search);
+            const id = querystring_params.get('id');
+
+            let subdir = '';
+            if (id.length <= 1) {
+                subdir = '0';
+            } else {
+                subdir = id.substring(0, 2);
+            }
+
+            let target = '';
+            if (window.location.pathname === '/show_bug.cgi') {
+                target = 'bug.html';
+            } else if (window.location.pathname === '/show_activity.cgi') {
+                target = 'activity.html';
+            }
+
+            const new_page = window.location.protocol + '//' + window.location.host + '/' + subdir + '/' + id + '/' + target;
+            window.location.replace(new_page);
+        }
+    </script>
 </head>
 
 <body>
@@ -11,6 +35,8 @@
 <p><b>Notice (2019-06-20): bugzilla.xamarin.com is now in <a href="index.html">read-only mode</a>.</b></p>
 
 <p>Microsoft/Xamarin employees: To access private bugs please contact the Release Engineering team.</p>
+
+<p>If you followed a link to a bug containing show_bug.cgi in the URL you should be redirected to the bug in a few seconds. In case that doesn't happen please file an issue on https://github.com/xamarin/bugzilla-archives/issues/new.</p>
 
 </div>
 </body>
