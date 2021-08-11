@@ -3,8 +3,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Page Not Found - Xamarin Bugzilla Archive</title>
     <script>
-        // redirect to the bug page for show_bug.cgi/show_activity.cgi
-        if (window.location.pathname === '/show_bug.cgi' || window.location.pathname === '/show_activity.cgi') {
+        // redirect to the bug page for show_bug.cgi/show_activity.cgi and the attachments blob storage for attachment.cgi
+        if (window.location.pathname === '/show_bug.cgi' || window.location.pathname === '/show_activity.cgi' || window.location.pathname === '/attachment.cgi') {
             const querystring_params = new URLSearchParams(location.search);
             const id = querystring_params.get('id');
 
@@ -15,14 +15,20 @@
                 subdir = id.substring(0, 2);
             }
 
+            let location = '';
             let target = '';
             if (window.location.pathname === '/show_bug.cgi') {
+                location = window.location.protocol + '//' + window.location.host;
                 target = 'bug.html';
             } else if (window.location.pathname === '/show_activity.cgi') {
+                location = window.location.protocol + '//' + window.location.host;
                 target = 'activity.html';
+            } else if (window.location.pathname === '/attachment.cgi') {
+                location = 'https://xamarinbugzillaarchives.blob.core.windows.net/attachments';
+                target = querystring_params.get('file');
             }
 
-            const new_page = window.location.protocol + '//' + window.location.host + '/' + subdir + '/' + id + '/' + target;
+            const new_page = location + '/' + subdir + '/' + id + '/' + target;
             window.location.replace(new_page);
         }
     </script>
