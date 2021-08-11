@@ -5,7 +5,7 @@
     <script>
         // redirect to the bug page for show_bug.cgi/show_activity.cgi and the attachments blob storage for attachment.cgi
         if (window.location.pathname === '/show_bug.cgi' || window.location.pathname === '/show_activity.cgi' || window.location.pathname === '/attachment.cgi') {
-            const querystring_params = new URLSearchParams(location.search);
+            const querystring_params = new URLSearchParams(window.location.search);
             const id = querystring_params.get('id');
 
             let subdir = '';
